@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #FFB7B2; /* Macaron Pink */
+  --color-primary-light: #FFDAC1;
+  --color-secondary: #E2F0CB; /* Pastel Green */
+  --color-accent: #B5EAD7; /* Mint */
+  --color-purple-light: #C7CEEA; /* Lilac */
+  --color-cheer-orange: #FF9A76;
+  --color-cheer-green: #39FF14;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #FAFAFA; /* Milky White */
+  color: #333333;
+  overflow: hidden; /* Mobile app feel, handle scrolling inside components */
+  overscroll-behavior-y: none;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Post-Neumorphism util */
+.soft-shadow {
+  box-shadow: 10px 10px 20px #e6e6e6, -10px -10px 20px #ffffff;
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
