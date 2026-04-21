@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, CalendarCheck, CheckCircle2, Wand2 } from 'lucide-react';
 import { useState } from 'react';
+import RewardModal from '../components/RewardModal';
 
 interface CheckInScreenProps {
   key?: string;
@@ -28,12 +29,10 @@ export default function CheckInScreen({ onBack, glowSticks, setGlowSticks }: Che
     if (hasCheckedIn) return;
     setHasCheckedIn(true);
     setCurrentDay(7);
-    setShowRewardAnimation(true);
     
-    setTimeout(() => {
-      setGlowSticks(glowSticks + 300);
-      setShowRewardAnimation(false);
-    }, 1500);
+    // Automatically set amount behind scenes immediately to prevent mismatch
+    setGlowSticks(glowSticks + 300);
+    setShowRewardAnimation(true);
   };
 
   return (
@@ -52,9 +51,12 @@ export default function CheckInScreen({ onBack, glowSticks, setGlowSticks }: Che
           <ChevronLeft size={24} />
         </button>
         <span className="font-extrabold text-gray-800 text-lg tracking-widest uppercase drop-shadow-sm pointer-events-auto">每日签到</span>
-        <div className="flex items-center gap-1.5 font-bold text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-cheer-orange)] px-3 py-1.5 rounded-full text-sm shadow-md pointer-events-auto border border-white/50">
+        <button 
+          onClick={() => window.dispatchEvent(new CustomEvent('SHOW_GLOW_STICKS'))}
+          className="flex items-center gap-1.5 font-bold text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-cheer-orange)] px-3 py-1.5 rounded-full text-sm shadow-md pointer-events-auto border border-white/50 active:scale-95 transition-transform"
+        >
           <Wand2 size={16} /> {glowSticks}
-        </div>
+        </button>
       </div>
 
       <div className="flex-1 flex flex-col px-6 pt-32 pb-32 overflow-y-auto">
@@ -118,26 +120,13 @@ export default function CheckInScreen({ onBack, glowSticks, setGlowSticks }: Che
         </motion.button>
       </div>
 
-      {/* Fly-in Animation Overlay */}
-      <AnimatePresence>
-        {showRewardAnimation && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
-          >
-            <motion.div
-              initial={{ scale: 0, y: 50 }}
-              animate={{ scale: 1.5, y: -100, opacity: [1, 1, 0] }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              className="text-[var(--color-cheer-orange)] font-extrabold text-4xl drop-shadow-xl flex items-center gap-2"
-            >
-              +300 <Wand2 size={40} className="animate-spin-slow" />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Reward Modal */}
+      <RewardModal 
+        isOpen={showRewardAnimation} 
+        onClose={() => setShowRewardAnimation(false)} 
+        title="每日签到奖励"
+        rewards={[{ name: "星光棒", amount: 300, icon: <Wand2 size={24} /> }]} 
+      />
     </motion.div>
   );
 }

@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -12,6 +12,7 @@ import Drawer from './components/Drawer';
 import BottomNav from './components/BottomNav';
 import RankingScreen from './screens/RankingScreen';
 import CheckInScreen from './screens/CheckInScreen';
+import GlowSticksRecordModal from './components/GlowSticksRecordModal';
 
 export type ScreenState = 'login' | 'home' | 'gacha' | 'backpack' | 'ranking' | 'checkin';
 
@@ -19,9 +20,16 @@ export default function App() {
   const [currentScreen, setCurrentScreen] = useState<ScreenState>('login');
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showGlowSticksRecord, setShowGlowSticksRecord] = useState(false);
   
   // Shared global state
   const [glowSticks, setGlowSticks] = useState(240);
+
+  useEffect(() => {
+    const handleShowRecord = () => setShowGlowSticksRecord(true);
+    window.addEventListener('SHOW_GLOW_STICKS', handleShowRecord);
+    return () => window.removeEventListener('SHOW_GLOW_STICKS', handleShowRecord);
+  }, []);
 
   const handleLogin = () => {
     setIsTransitioning(true);
@@ -89,6 +97,11 @@ export default function App() {
             glowSticks={glowSticks}
           />
         )}
+
+        <GlowSticksRecordModal 
+          isOpen={showGlowSticksRecord} 
+          onClose={() => setShowGlowSticksRecord(false)} 
+        />
       </div>
     </div>
   );

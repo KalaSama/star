@@ -19,25 +19,24 @@ const MOCK_REWARDS = {
 
 // Mock Data for Idols with global and weekly heat
 const INITIAL_STARS = [
-  { id: 1, name: 'Astrid ✨', isFollowed: true, myLevel: 5, myExp: 350, maxExp: 500, globalHeat: 582400, weeklyHeat: 82000, reward: { ...MOCK_REWARDS.avatarLabel, desc: 'Astrid星光守护者 动态称号' }, avatar: 'https://picsum.photos/seed/idol1/100/100', bg: 'bg-yellow-50' },
-  { id: 2, name: 'Luna / ルナ', isFollowed: false, myLevel: 3, myExp: 100, maxExp: 300, globalHeat: 495120, weeklyHeat: 91000, reward: { ...MOCK_REWARDS.physical, desc: '精美立牌抽奖券' }, avatar: 'https://picsum.photos/seed/idol2/100/100', bg: 'bg-gray-50' },
-  { id: 3, name: 'Stella', isFollowed: true, myLevel: 2, myExp: 220, maxExp: 250, globalHeat: 412000, weeklyHeat: 56000, reward: { ...MOCK_REWARDS.digital, desc: '星星魔法聊天气泡' }, avatar: 'https://picsum.photos/seed/idol3/100/100', bg: 'bg-orange-50' },
-  { id: 4, name: 'Neon', isFollowed: false, myLevel: 1, myExp: 20, maxExp: 100, globalHeat: 320500, weeklyHeat: 43000, reward: { ...MOCK_REWARDS.audio, desc: '睡前悄悄话音频' }, avatar: 'https://picsum.photos/seed/idol4/100/100', bg: 'bg-white' },
-  { id: 5, name: 'Nova', isFollowed: true, myLevel: 1, myExp: 0, maxExp: 100, globalHeat: 154000, weeklyHeat: 15000, reward: { ...MOCK_REWARDS.digital, desc: '见习守护者铭牌' }, avatar: 'https://picsum.photos/seed/idol5/100/100', bg: 'bg-indigo-50' },
+  { id: 1, name: 'Astrid ✨', isFollowed: true, myLevel: 5, myExp: 350, maxExp: 500, heat: 82000, reward: { ...MOCK_REWARDS.avatarLabel, desc: 'Astrid星光守护者 动态称号' }, avatar: 'https://picsum.photos/seed/star1/150/150', bg: 'bg-yellow-50' },
+  { id: 2, name: 'Luna / ルナ', isFollowed: false, myLevel: 3, myExp: 100, maxExp: 300, heat: 91000, reward: { ...MOCK_REWARDS.physical, desc: '精美立牌抽奖券' }, avatar: 'https://picsum.photos/seed/star2/150/150', bg: 'bg-gray-50' },
+  { id: 3, name: 'Stella', isFollowed: true, myLevel: 2, myExp: 220, maxExp: 250, heat: 56000, reward: { ...MOCK_REWARDS.digital, desc: '星星魔法聊天气泡' }, avatar: 'https://picsum.photos/seed/star3/150/150', bg: 'bg-orange-50' },
+  { id: 4, name: 'Neon', isFollowed: false, myLevel: 1, myExp: 20, maxExp: 100, heat: 43000, reward: { ...MOCK_REWARDS.audio, desc: '睡前悄悄话音频' }, avatar: 'https://picsum.photos/seed/star4/150/150', bg: 'bg-white' },
+  { id: 5, name: 'Nova', isFollowed: true, myLevel: 1, myExp: 0, maxExp: 100, heat: 15000, reward: { ...MOCK_REWARDS.digital, desc: '见习守护者铭牌' }, avatar: 'https://picsum.photos/seed/star5/150/150', bg: 'bg-indigo-50' },
 ];
 
 const TOP_USERS = [
-  { id: 101, name: '樱花海', avatar: 'https://picsum.photos/seed/u1/100/100', globalContribution: 125000, weeklyContribution: 15000, starId: 1 },
-  { id: 102, name: '星光守护者', avatar: 'https://picsum.photos/seed/u2/100/100', globalContribution: 98000, weeklyContribution: 22000, starId: 1 },
-  { id: 103, name: 'MikuFan99', avatar: 'https://picsum.photos/seed/u3/100/100', globalContribution: 85000, weeklyContribution: 8000, starId: 1 },
-  { id: 104, name: '月光曲', avatar: 'https://picsum.photos/seed/u4/100/100', globalContribution: 74000, weeklyContribution: 31000, starId: 2 },
-  { id: 105, name: '夜猫子', avatar: 'https://picsum.photos/seed/u5/100/100', globalContribution: 62000, weeklyContribution: 5000, starId: 2 },
-  { id: 106, name: '云端漫步', avatar: 'https://picsum.photos/seed/u6/100/100', globalContribution: 51000, weeklyContribution: 2000, starId: 3 },
+  { id: 101, name: '樱花海', avatar: 'https://picsum.photos/seed/user1/100/100', contribution: 15000, starId: 1 },
+  { id: 102, name: '星光守护者', avatar: 'https://picsum.photos/seed/user2/100/100', contribution: 22000, starId: 1 },
+  { id: 103, name: 'MikuFan99', avatar: 'https://picsum.photos/seed/user3/100/100', contribution: 8000, starId: 1 },
+  { id: 104, name: '月光曲', avatar: 'https://picsum.photos/seed/user4/100/100', contribution: 31000, starId: 2 },
+  { id: 105, name: '夜猫子', avatar: 'https://picsum.photos/seed/user5/100/100', contribution: 5000, starId: 2 },
+  { id: 106, name: '云端漫步', avatar: 'https://picsum.photos/seed/user6/100/100', contribution: 2000, starId: 3 },
 ];
 
 export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: RankingScreenProps) {
   const [activeTab, setActiveTab] = useState<'stars' | 'users'>('stars');
-  const [timeFrame, setTimeFrame] = useState<'total' | 'weekly'>('total');
   
   // Star Tab State
   const [stars, setStars] = useState(INITIAL_STARS);
@@ -52,16 +51,12 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
   );
   const [isIdolPickerOpen, setIsIdolPickerOpen] = useState(false);
 
-  // Computed data calculations
-  const heatTarget = timeFrame === 'total' ? 'globalHeat' : 'weeklyHeat';
-  const contTarget = timeFrame === 'total' ? 'globalContribution' : 'weeklyContribution';
-
-  // 1. Calculate the real global/weekly ranks for *all* idols before filtering
+  // 计算真实的全球/周度排名
   const allRankedStars = useMemo(() => {
     return [...stars]
-      .sort((a, b) => b[heatTarget] - a[heatTarget])
+      .sort((a, b) => b.heat - a.heat)
       .map((star, index) => ({ ...star, rank: index + 1 }));
-  }, [stars, heatTarget]);
+  }, [stars]);
 
   // 2. Then apply the 'followed' and 'search' filters
   const displayStars = useMemo(() => {
@@ -79,9 +74,9 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
   const displayUsers = useMemo(() => {
     return TOP_USERS
       .filter(u => u.starId === selectedStarId)
-      .sort((a, b) => b[contTarget] - a[contTarget])
+      .sort((a, b) => b.contribution - a.contribution)
       .map((user, index) => ({ ...user, rank: index + 1 }));
-  }, [selectedStarId, contTarget]);
+  }, [selectedStarId]);
 
   const selectedStarData = INITIAL_STARS.find(s => s.id === selectedStarId);
 
@@ -94,8 +89,7 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
     
     setStars(prev => prev.map(s => {
       if (s.id === starId) {
-        let newGlobalHeat = s.globalHeat + 100;
-        let newWeeklyHeat = s.weeklyHeat + 100;
+        let newHeat = s.heat + 100;
         let newExp = s.myExp + 50;
         let newLevel = s.myLevel;
         let newMax = s.maxExp;
@@ -104,7 +98,7 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
           newExp -= s.maxExp;
           newMax = Math.floor(newMax * 1.5);
         }
-        return { ...s, globalHeat: newGlobalHeat, weeklyHeat: newWeeklyHeat, myExp: newExp, myLevel: newLevel, maxExp: newMax };
+        return { ...s, heat: newHeat, myExp: newExp, myLevel: newLevel, maxExp: newMax };
       }
       return s;
     }));
@@ -187,27 +181,11 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
       {/* Main Content Area */}
       <div className="flex-1 overflow-hidden pt-32 pb-[100px] flex flex-col relative w-full">
         
-        {/* Toggle Controls Section (Timeframe + Filters depending on tab) */}
+        {/* Toggle Controls Section (Filters depending on tab) */}
         <div className="px-6 mb-4 flex justify-between items-center z-10 shrink-0">
           
-          {/* Global / Weekly Toggle */}
-          <div className="bg-gray-100 p-1 rounded-full flex gap-1 border border-gray-200/50 shadow-inner">
-            <button
-              onClick={() => setTimeFrame('total')}
-              className={`px-4 py-1.5 rounded-full font-bold text-xs transition-all ${
-                timeFrame === 'total' ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-500'
-              }`}
-            >
-              总榜
-            </button>
-            <button
-              onClick={() => setTimeFrame('weekly')}
-              className={`px-4 py-1.5 rounded-full font-bold text-xs transition-all flex items-center gap-1 ${
-                timeFrame === 'weekly' ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-500'
-              }`}
-            >
-              周榜刷新
-            </button>
+          <div className="bg-pink-50 px-3 py-1.5 rounded-full text-[11px] font-extrabold text-[var(--color-primary)] border border-pink-100 flex items-center gap-1.5 shadow-sm">
+            实时排行榜
           </div>
 
           {/* Contextual Right Filter */}
@@ -240,9 +218,8 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
         {activeTab === 'stars' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col overflow-hidden">
             
-            {/* Weekly Rewards Context Banner (Only visible in Weekly mode) */}
+            {/* Weekly Rewards Context Banner */}
             <AnimatePresence>
-              {timeFrame === 'weekly' && (
                 <motion.div 
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
@@ -252,11 +229,10 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
                   <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-100 p-3 rounded-2xl flex items-start gap-3 shadow-sm">
                     <Trophy size={18} className="text-orange-400 shrink-0 mt-0.5" />
                     <p className="text-[11px] font-bold text-orange-800 leading-relaxed">
-                      周榜即时结算是给偶像争取更好资源的关键！<br/>排名前3位的明星将在这周解锁<span className="font-black text-orange-600">神秘开屏海报与实物抽选大奖</span>。
+                      即时结算是给偶像争取更好资源的关键！<br/>排名前3位的明星将在这周解锁<span className="font-black text-orange-600">神秘开屏海报与实物抽选大奖</span>。
                     </p>
                   </div>
                 </motion.div>
-              )}
             </AnimatePresence>
 
             {/* Scrolling View */}
@@ -291,7 +267,7 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
                             <h3 className="font-extrabold text-gray-800 text-lg leading-tight truncate w-full">{star.name}</h3>
                             <div className="flex items-center gap-1 text-[11px] font-bold text-[var(--color-cheer-orange)] mt-1 bg-orange-50 w-max px-2 py-0.5 rounded-full">
                               <Flame size={12} fill="currentColor" />
-                              热度: {star[heatTarget].toLocaleString()}
+                              热度: {star.heat.toLocaleString()}
                             </div>
                           </div>
 
@@ -376,9 +352,8 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
         {activeTab === 'users' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col h-full overflow-hidden">
             
-            {/* Weekly Honors Context Banner (Only visible in Weekly mode) */}
+            {/* Weekly Honors Context Banner */}
             <AnimatePresence>
-              {timeFrame === 'weekly' && (
                 <motion.div 
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
@@ -388,11 +363,10 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
                   <div className="bg-gradient-to-r from-[var(--color-primary)]/10 to-transparent border-l-4 border-[var(--color-primary)] p-3 rounded-r-2xl flex items-start gap-3">
                     <Crown size={20} className="text-[var(--color-primary)] shrink-0 mt-0.5" />
                     <p className="text-xs font-bold text-gray-700 leading-relaxed">
-                      本周霸榜福利：排行第一获得<span className="text-[var(--color-primary)] font-black mx-1">【{selectedStarData?.name} 专属高光海报称号】</span>及限定动态荣誉库头像框！
+                      霸榜福利：排行第一获得<span className="text-[var(--color-primary)] font-black mx-1">【{selectedStarData?.name} 专属高光海报称号】</span>及限定动态荣誉库头像框！
                     </p>
                   </div>
                 </motion.div>
-              )}
             </AnimatePresence>
 
             {/* Users List View */}
@@ -413,7 +387,7 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
                       
                       <div className="relative shrink-0">
                         <img src={user.avatar} className="w-12 h-12 rounded-full object-cover border border-gray-100 shadow-sm" referrerPolicy="no-referrer" alt="" />
-                        {user.rank === 1 && timeFrame === 'weekly' && (
+                        {user.rank === 1 && (
                           <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 rounded-full p-0.5 drop-shadow-sm border border-white">
                             <Crown size={12} className="text-white" />
                           </div>
@@ -423,7 +397,7 @@ export default function RankingScreen({ onBack, glowSticks, setGlowSticks }: Ran
                       <div className="ml-3 flex-1 flex flex-col justify-center">
                         <span className="font-extrabold text-gray-800 text-[15px]">{user.name}</span>
                         <div className="flex items-center gap-1 mt-0.5 text-[var(--color-cheer-orange)] font-bold text-xs bg-orange-50 w-max px-2 py-0.5 rounded-md">
-                          <Wand2 size={12} /> 贡献 {user[contTarget].toLocaleString()}
+                          <Wand2 size={12} /> 贡献 {user.contribution.toLocaleString()}
                         </div>
                       </div>
                       
